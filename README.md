@@ -28,12 +28,20 @@ This example uses a client-server architecture. The server (backend) project com
 
 ## Quick Start
 
-Run the **asp-net-core-server** application in Visual Studio.
+### Server
+In the **asp-net-core-server** folder run the following command:
+
+```
+dotnet run
+```
+
+The server starts at `http://localhost:5000` and the client gets data from `http://localhost:5000/api/dashboard`. To debug the server, run the **asp-net-core-server** application in Visual Studio and change the client's `endpoint` property according to the listening port: `https://localhost:44371/api/dashboard`.
 
 See the following section for information on how to install NuGet packages from the DevExpress NuGet feed: [Install DevExpress Controls Using NuGet Packages](https://docs.devexpress.com/GeneralInformation/115912/installation/install-devexpress-controls-using-nuget-packages).
 
 > This server allows CORS requests from _all_ origins with _any_ scheme (http or https). This default configuration is insecure: any website can make cross-origin requests to the app. We recommend that you specify the client application's URL to prohibit other clients from accessing sensitive information stored on the server. Learn more: [Cross-Origin Resource Sharing (CORS)](https://docs.devexpress.com/Dashboard/400709)
 
+### Client
 In the **dashboard-react-app** folder, run the following commands:
 
 ```
@@ -41,7 +49,7 @@ npm install
 npm start
 ```
 
-Open ```http://localhost:4200/``` in your browser to see the result.
+Open ```http://localhost:4200/``` in your browser to see the Web Dashboard application.
 
 ## Country Sales Dashboard
 
