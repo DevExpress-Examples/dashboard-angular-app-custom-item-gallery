@@ -1,4 +1,3 @@
-import * as Model from 'devexpress-dashboard/model';
 import { ICustomItemExtension, CustomItemViewer } from 'devexpress-dashboard/common';
 import { ICustomItemMetaData } from 'devexpress-dashboard/model/items/custom-item/meta';
 import dxGantt from 'devextreme/ui/gantt';
@@ -61,7 +60,7 @@ const ganttItemMeta: ICustomItemMetaData = {
     title: 'Gantt Chart'
 };
 
-export class GanttItemExtension {
+export class GanttItemExtension implements ICustomItemExtension {
     name = GANTT_EXTENSION_NAME;
     metaData = ganttItemMeta;
 

@@ -114,14 +114,9 @@ export class SimpleTableItem extends CustomItemViewer {
         let row: HTMLTableRowElement = <HTMLTableRowElement>this.table?.createTHead().insertRow();
 
         for (let text of texts) {
-            let cell = row.insertCell();
-
-            if (isHeader)
-                cell.outerHTML = `<th style='padding: 3px;'>${text}</th>`;
-            else {
-                cell.style.padding = '3px';
-                cell.innerText = text;
-            }
-        }
+            let cell = isHeader ? row.appendChild(document.createElement("th")) : row.insertCell();
+            cell.style.padding = '3px';
+            cell.textContent = text;
+        }        
     }
 }

@@ -1,4 +1,3 @@
-import * as Model from 'devexpress-dashboard/model';
 import { ICustomItemExtension, CustomItemViewer, DashboardControl, ViewerApiExtension } from 'devexpress-dashboard/common';
 import { ICustomItemMetaData } from 'devexpress-dashboard/model/items/custom-item/meta';
 import dxTreeView from 'devextreme/ui/tree_view';

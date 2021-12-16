@@ -1,11 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { DashboardControlArgs, DashboardPanelExtension } from 'devexpress-dashboard';
 import { GanttItemExtension } from './extensions/gantt-item';
 import { TreeViewItemExtension } from './extensions/hierarchical-tree-view-item';
 import { OnlineMapItemExtension } from './extensions/online-map-item';
 import { ParameterItemExtension } from './extensions/parameter-item';
 import { PolarChartItemExtension } from './extensions/polar-chart-item';
-import { SimpleTableItemExtension } from './extensions/simple-table';
+import { SimpleTableItemExtension } from './extensions/simple-table-item';
 import { WebPageItemExtension } from './extensions/webpage-item';
 
 @Component({
