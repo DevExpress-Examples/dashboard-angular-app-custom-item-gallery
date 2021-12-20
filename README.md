@@ -28,7 +28,7 @@ This example uses a client-server architecture. The server (backend) project com
 ## Quick Start
 
 ### Server
-In the **asp-net-core-server** folder run the following command:
+Run the following command in the **asp-net-core-server** folder:
 
 ```
 dotnet run
