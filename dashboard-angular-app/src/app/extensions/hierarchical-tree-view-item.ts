@@ -97,7 +97,7 @@ export class TreeViewItem extends CustomItemViewer {
                 element.removeChild(element.firstChild);
 
 		let div = document.createElement('div');
-		let treeView = new dxTreeView(div, {
+		this.dxTreeViewWidget = new dxTreeView(div, {
 			items: dataSource,
 			dataStructure: "plain",
 			parentIdExpr: "ParentID",
@@ -114,15 +114,29 @@ export class TreeViewItem extends CustomItemViewer {
 						return [row._customData.getUniqueValue('dimensionsBinding')[0]]
 					});
 				let viewerApiExtension = <ViewerApiExtension>this.dashboardControl.findExtension("viewer-api");
-				if (this.getMasterFilterMode() === 'Multiple') {
+				//if (this.getMasterFilterMode() === 'Multiple') {
 					if (selectedRows.length)
-						viewerApiExtension.setMasterFilter(this['model'].componentName(), selectedRows);
+						viewerApiExtension.setMasterFilter(this['model'].componentName(), 
+							this.getMasterFilterMode() === 'Multiple'? selectedRows: [selectedRows[0]]);
 					else
 						viewerApiExtension.clearMasterFilter(this['model'].componentName());
-				}
+				//}
 			}
 		});
-		treeView.selectAll();
+		this.dxTreeViewWidget.selectAll();
 		element.appendChild(div);
 	}
+
+	override setSelection(values: Array<Array<any>>): void {
+        super.setSelection(values);
+
+		this.dxTreeViewWidget?.option("selectionMode", <any>this.getMasterFilterMode().toLowerCase());
+
+        let nodes: any = this.dxTreeViewWidget?.option("items");
+        
+		nodes.forEach((item: any) => {
+            if (this.isSelected(item._customData))
+                this.dxTreeViewWidget?.selectItem(item.ID)
+        });
+    }
 }
