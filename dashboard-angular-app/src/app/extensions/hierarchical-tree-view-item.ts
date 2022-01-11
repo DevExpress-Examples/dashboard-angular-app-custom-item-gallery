@@ -1,6 +1,6 @@
-import { ICustomItemExtension, CustomItemViewer, DashboardControl, ViewerApiExtension } from 'devexpress-dashboard/common';
+import { ICustomItemExtension, CustomItemViewer, DashboardControl } from 'devexpress-dashboard/common';
 import { ICustomItemMetaData } from 'devexpress-dashboard/model/items/custom-item/meta';
-import dxTreeView from 'devextreme/ui/tree_view';
+import dxTreeView, { Node, Properties } from 'devextreme/ui/tree_view';
 
 const HIERARCIAL_TREE_VIEW_EXTENSION_NAME = 'TreeView';
 
@@ -12,7 +12,7 @@ const svgIcon = `<?xml version="1.0" encoding="utf-8"?>
 			c-0.6,0-1,0.5-1,1v4c0,0.5,0.4,1,1,1h6C20.5,23,21,22.5,21,22z"/>
 	</svg>`;
 
-const treeViewMeta/*: ICustomItemMetaData*/ = {
+const treeViewMeta: ICustomItemMetaData = {
     bindings: [{
         propertyName: 'idBinding',
         dataItemType: 'Dimension',
@@ -37,8 +37,7 @@ const treeViewMeta/*: ICustomItemMetaData*/ = {
         enableInteractivity: true
     }],
     interactivity: {
-        filter: true,
-        applyEmptyFilter: true // private option
+        filter: true
     },
     icon: HIERARCIAL_TREE_VIEW_EXTENSION_NAME,
     // Uncomment the line below to place this custom item in the "Filter" group:
@@ -92,37 +91,63 @@ export class TreeViewItem extends CustomItemViewer {
 			dataSource.push(row);
 		});
 
-		if(!changeExisting)
-            while (element.firstChild)
-                element.removeChild(element.firstChild);
-
-		let div = document.createElement('div');
-		this.dxTreeViewWidget = new dxTreeView(div, {
+		let treeViewOptions: Properties = {
 			items: dataSource,
 			dataStructure: "plain",
 			parentIdExpr: "ParentID",
 			keyExpr: "ID",
 			displayExpr: "DisplayField",
-			selectionMode: <any>this.getMasterFilterMode().toLowerCase(),
-			selectNodesRecursive: true,
-			showCheckBoxesMode: "normal",
-			onSelectionChanged: (e) => {
-				let selectedNodeKeys = e.component.getSelectedNodeKeys();
-				let selectedRows = dataSource
-					.filter(function (row) { return selectedNodeKeys.indexOf(row.ID) !== -1 })
-					.map(function (row) {
-						return [row._customData.getUniqueValue('dimensionsBinding')[0]]
-					});
-				let viewerApiExtension = <ViewerApiExtension>this.dashboardControl.findExtension("viewer-api");
-				if (this.getMasterFilterMode() === 'Multiple') {
-					if (selectedRows.length)
-						viewerApiExtension.setMasterFilter(this['model'].componentName(), selectedRows);
-					else
-						viewerApiExtension.clearMasterFilter(this['model'].componentName());
-				}
+			selectionMode: "multiple",
+			selectNodesRecursive: false,
+	        onItemClick: e => {
+	            if(this.getMasterFilterMode() === 'Multiple' && this.allowMultiselection) {
+	                this.setMasterFilterRecursive(<any>e.node);
+	            }
+	            else {
+	                this.setMasterFilter((<any>e.itemData)._customData);
+	            }
+	        },
+			onContentReady: e => {
+				this.updateTreeViewSelection();
 			}
-		});
-		this.dxTreeViewWidget.selectAll();
-		element.appendChild(div);
+		};
+
+		if (!changeExisting) {
+			while (element.firstChild)
+				element.removeChild(element.firstChild);
+			let div = document.createElement('div');
+			element.appendChild(div);
+			this.dxTreeViewWidget = new dxTreeView(div, treeViewOptions);
+		}
+		else {
+			this.dxTreeViewWidget?.option(treeViewOptions);
+		}
+	}
+
+	override clearSelection(): void {
+	    super.clearSelection();
+	    this.updateTreeViewSelection();
+	}
+
+	override setSelection(values: Array<Array<any>>): void {
+	    super.setSelection(values);
+	    this.updateTreeViewSelection();
+	}
+
+	updateTreeViewSelection() {
+		if (this.dxTreeViewWidget) {
+			this.dxTreeViewWidget.unselectAll();
+			let nodes: any = this.dxTreeViewWidget.option('items');
+
+			nodes.forEach((item: any) => {
+				if(this.isSelected(item._customData))
+					this.dxTreeViewWidget?.selectItem(item.ID);
+			});
+		}
+	}
+
+	setMasterFilterRecursive(node: Node) {
+	    this.setMasterFilter((<any>node.itemData)._customData);
+	    node.children?.forEach(x => this.setMasterFilterRecursive(x));
 	}
 }
