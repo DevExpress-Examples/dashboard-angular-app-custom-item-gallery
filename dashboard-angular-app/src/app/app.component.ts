@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DashboardControlArgs, DashboardPanelExtension } from 'devexpress-dashboard';
+import { FunnelD3ItemExtension } from './extensions/funnel-d3-item';
 import { GanttItemExtension } from './extensions/gantt-item';
 import { TreeViewItemExtension } from './extensions/hierarchical-tree-view-item';
 import { OnlineMapItemExtension } from './extensions/online-map-item';
@@ -29,5 +30,6 @@ export class AppComponent {
     dashboardControl.registerExtension(new GanttItemExtension(dashboardControl));
     dashboardControl.registerExtension(new TreeViewItemExtension(dashboardControl));
     dashboardControl.registerExtension(new ParameterItemExtension(dashboardControl));
+    dashboardControl.registerExtension(new FunnelD3ItemExtension(dashboardControl));
   }
 }
