@@ -96,14 +96,52 @@
         <automaticUpdates>On</automaticUpdates>
       </CustomProperties>
     </CustomItem>
+    <CustomItem ComponentName="customItemDashboardItem4" Name="Funnel D3" DataSource="DataSource1" DataMember="SalesPerson" CustomItemType="FunnelD3">
+      <CustomProperties>
+        <IsDynamicHeight>false</IsDynamicHeight>
+        <PinchCount>2</PinchCount>
+      </CustomProperties>
+      <DataItems>
+        <Measure DataMember="Quantity" DefaultId="DataItem0" />
+        <Dimension DataMember="ProductName" SortOrder="Descending" ColoringMode="Hue" SortByMeasure="DataItem0" DefaultId="DataItem1" />
+      </DataItems>
+      <SliceTables>
+        <SliceTable Name="SliceTable1">
+          <Dimensions>
+            <Dimension DefaultId="DataItem1" />
+          </Dimensions>
+          <Measures>
+            <Measure DefaultId="DataItem0" />
+          </Measures>
+        </SliceTable>
+      </SliceTables>
+      <InteractivityTargets>
+        <Dimension DefaultId="DataItem1" />
+      </InteractivityTargets>
+      <ColoringDimensions>
+        <Dimension DefaultId="DataItem1" />
+      </ColoringDimensions>
+      <ColoringMeasures>
+        <Measure DefaultId="DataItem0" />
+      </ColoringMeasures>
+      <CustomMetadata>
+        <Values>
+          <Item1 ItemType="Measure" DefaultId="DataItem0" />
+        </Values>
+        <Arguments>
+          <Item1 ItemType="Dimension" DefaultId="DataItem1" />
+        </Arguments>
+      </CustomMetadata>
+    </CustomItem>
   </Items>
   <LayoutTree>
     <LayoutGroup>
-      <LayoutGroup Orientation="Vertical" Weight="0.6364946928576967">
+      <LayoutGroup Orientation="Vertical" Weight="0.9582899928186823">
         <LayoutItem DashboardItem="customItemDashboardItem1" Weight="0.18035884137205366" />
         <LayoutItem DashboardItem="customItemDashboardItem3" Weight="0.7387267095406758" />
       </LayoutGroup>
-      <LayoutItem DashboardItem="customItemDashboardItem2" Weight="1.9641802227778489" />
+      <LayoutItem DashboardItem="customItemDashboardItem4" Weight="1.8689550829934753" />
+      <LayoutItem DashboardItem="customItemDashboardItem2" Weight="1.7376100626012367" />
     </LayoutGroup>
   </LayoutTree>
 </Dashboard>
