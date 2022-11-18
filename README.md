@@ -11,7 +11,7 @@ The example contains the source code of the most requested custom items you can 
 
 This example uses a client-server architecture. The server (backend) project communicates with the client (frontend) application that includes all the necessary styles, scripts and HTML templates. Note that the script version on the client must match the version of libraries on the server.
 
-- The [asp-net-core-server](asp-net-core-server) folder contains the backend project built with ASP.NET Core 3.1.
+- The [asp-net-core-server](asp-net-core-server) folder contains the backend project built with ASP.NET Core 6.0.
 - The [dashboard-angular-app](dashboard-angular-app) folder contains the client application built with React.
 
 ## Files to Review
