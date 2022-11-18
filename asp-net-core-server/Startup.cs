@@ -60,7 +60,7 @@ namespace AspNetCoreDashboardBackend {
                 // Maps the default controller/action to display the service info view.
                 endpoints.MapDefaultControllerRoute();
                 // Maps the dashboard route.
-                EndpointRouteBuilderExtension.MapDashboardRoute(endpoints, "api/dashboard", "DefaultDashboard");
+                endpoints.MapDashboardRoute("api/dashboard", "DefaultDashboard");
                 // Requires CORS policies.
                 endpoints.MapControllers().RequireCors("CorsPolicy");
             });
