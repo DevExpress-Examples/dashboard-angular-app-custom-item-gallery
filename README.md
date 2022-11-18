@@ -14,7 +14,7 @@ This example uses a client-server architecture. The server (backend) project com
 - The [asp-net-core-server](asp-net-core-server) folder contains the backend project built with ASP.NET Core 3.1.
 - The [dashboard-angular-app](dashboard-angular-app) folder contains the client application built with React.
 
-## Files to Look At
+## Files to Review
 
 * [simple-table-item.ts](dashboard-angular-app/src/app/extensions/simple-table-item.ts)
 * [polar-chart-item.ts](dashboard-angular-app/src/app/extensions/polar-chart-item.ts)
