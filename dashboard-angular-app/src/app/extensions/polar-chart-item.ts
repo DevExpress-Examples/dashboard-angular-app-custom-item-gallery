@@ -1,5 +1,5 @@
 import * as Model from 'devexpress-dashboard/model';
-import { ICustomItemExtension, CustomItemViewer } from 'devexpress-dashboard/common';
+import { ICustomItemExtension, CustomItemViewer, CustomItemExportInfo } from 'devexpress-dashboard/common';
 import { ICustomItemMetaData } from 'devexpress-dashboard/model/items/custom-item/meta';
 import dxPolarChart from 'devextreme/viz/polar_chart';
 
@@ -67,6 +67,7 @@ export class PolarChartItemExtension implements ICustomItemExtension {
 export class PolarChartItem extends CustomItemViewer {
     dxPolarWidget?: dxPolarChart;
     dxPolarWidgetSettings?: any;
+    exportingImageData?: string;
 
     constructor(model: any, container: any, options: any) {
         super(model, container, options);
@@ -126,6 +127,11 @@ export class PolarChartItem extends CustomItemViewer {
             onPointClick: (e: any) => {
                 let point = e.target;
                 this.setMasterFilter(point.data.clientDataRow);
+            },
+            onDrawn: (e: any) => {
+                this.convertSVGtoPNG(e.component.svg(), e.element.clientWidth, e.element.clientHeight).then((data: string) => {
+                    this.exportingImageData = data;
+                });
             }
         };
     }
@@ -146,7 +152,7 @@ export class PolarChartItem extends CustomItemViewer {
         super.setSelection(values);
         this._updateSelection();        
     }
-    
+
     _updateSelection() {
         let series = this.dxPolarWidget?.getAllSeries();
 
@@ -171,5 +177,34 @@ export class PolarChartItem extends CustomItemViewer {
     override setSize(width: number, height: number): void {
         super.setSize(width, height);
         this.dxPolarWidget?.render();
+    }
+
+    override allowExportSingleItem(): boolean {
+        return true;
+    }
+
+    override getExportInfo(): CustomItemExportInfo {
+        return {
+            image: this.exportingImageData
+        };
+    }
+
+    convertSVGtoPNG(svgString: string, width: number, height: number) {
+        return new Promise(function (resolve, reject) {
+            try {
+                const encodedData = 'data:image/svg+xml;base64,' + window.btoa(window['unescape'](encodeURIComponent(svgString)));
+                var image = new Image();
+                var canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                image.onload = () => {
+                    canvas.getContext('2d').drawImage(image, 0, 0);
+                    resolve(canvas.toDataURL().replace('data:image/png;base64,', ''));
+                };
+                image.src = encodedData;
+            } catch (err) {
+                reject('Failed to convert SVG to PNG: ' + err);
+            }
+        });
     }
 }
