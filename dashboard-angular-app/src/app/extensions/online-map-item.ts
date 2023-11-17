@@ -168,7 +168,7 @@ export class OnlineMapItem extends CustomItemViewer {
                 width: this.contentWidth(),
                 height: this.contentHeight(),
                 // Use the template below to authenticate the application within the required map provider.
-                //key: { 
+                //apiKey: { 
                 //    bing: 'BINGAPIKEY',
                 //    google: 'GOOGLEAPIKEY'
                 //},             
