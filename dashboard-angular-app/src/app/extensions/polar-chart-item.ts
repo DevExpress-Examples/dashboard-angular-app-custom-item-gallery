@@ -189,7 +189,7 @@ export class PolarChartItem extends CustomItemViewer {
         };
     }
 
-    convertSVGtoPNG(svgString: string, width: number, height: number) {
+    convertSVGtoPNG(svgString: string, width: number, height: number): PromiseLike<string> {
         return new Promise(function (resolve, reject) {
             try {
                 const encodedData = 'data:image/svg+xml;base64,' + window.btoa(window['unescape'](encodeURIComponent(svgString)));

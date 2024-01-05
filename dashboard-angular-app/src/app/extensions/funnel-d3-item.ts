@@ -2,8 +2,8 @@ import { ICustomItemExtension, CustomItemViewer } from 'devexpress-dashboard/com
 import { FormItemTemplates } from 'devexpress-dashboard/designer';
 import * as Model from 'devexpress-dashboard/model';
 import { ICustomItemMetaData } from 'devexpress-dashboard/model/items/custom-item/meta';
-import * as D3Funnel from 'd3-funnel';
-import * as $ from 'jquery';
+import D3Funnel from 'd3-funnel';
+import $ from 'jquery';
 
 const FUNNEL_D3_EXTENSION_NAME = 'FunnelD3';
 
@@ -122,7 +122,7 @@ class FunnelD3ItemViewer extends CustomItemViewer {
       this._subscribeProperties();
   }
 
-  renderContent(element, changeExisting) {
+  override renderContent(element, changeExisting) {
       let htmlElement: HTMLElement = element instanceof $ ? (<JQuery>element).get(0): <HTMLElement>(<any>element);
 
       var data = this._getDataSource();
@@ -148,24 +148,24 @@ class FunnelD3ItemViewer extends CustomItemViewer {
           this.funnelViewer = null;
       }
   };
-  setSize (width, height) {
+  override setSize (width, height) {
       super.setSize(width, height);
       this._update(null, this._getFunnelSizeOptions());
   };
-  setSelection(values: Array<Array<any>>) {
+  override setSelection(values: Array<Array<any>>) {
       super.setSelection(values);
       this._update(this._getDataSource());
   };
-  clearSelection() {
+  override clearSelection() {
       super.clearSelection();
       this._update(this._getDataSource());
   };
-  allowExportSingleItem() {
+  override allowExportSingleItem() {
       return !this._isIEBrowser();
   };
-  getExportInfo () {
+  override getExportInfo () {
       if (this._isIEBrowser())
-          return;
+          return void 0;
       return {
           image: this._getImageBase64()
       };
