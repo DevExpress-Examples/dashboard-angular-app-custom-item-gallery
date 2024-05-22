@@ -99,6 +99,7 @@ export class ParameterItem extends CustomItemViewer {
     parametersContent: any;
     dialogButtonSubscribe: any;
     buttons: dxButton[] = [];
+    _element: HTMLElement;
 
     constructor(model: any, container: any, options: any, parametersExtension: any) {
         super(model, container, options);
@@ -128,6 +129,7 @@ export class ParameterItem extends CustomItemViewer {
     } 
 
     override renderContent(element: HTMLElement, changeExisting: boolean, afterRenderCallback?: any) {
+        this._element = element;
         if (!changeExisting) {
             element.innerHTML = '';
             this.buttons.forEach(button => button.dispose());
@@ -195,7 +197,7 @@ export class ParameterItem extends CustomItemViewer {
     }
     _subscribeProperties() {
         this.subscribe('showHeaders', (showHeaders) => { this._update({ showHeaders: showHeaders }); });
-        this.subscribe('showParameterName', (showParameterName) => { this._update({ showParameterName: showParameterName }); });
+        this.subscribe('showParameterName', (showParameterName) => { this._update({ showParameterName: showParameterName, rerender: true }); });
         this.subscribe('automaticUpdates', (automaticUpdates) => { this._update({ automaticUpdates: automaticUpdates }) });
     };
     _update(options: any) {
@@ -217,5 +219,7 @@ export class ParameterItem extends CustomItemViewer {
             }
         }
         this._setGridHeight();
+        if(options.rerender)
+            this.renderContent(this._element, false);
     }
 }
