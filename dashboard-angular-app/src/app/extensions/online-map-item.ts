@@ -41,7 +41,7 @@ const onlineMapMeta: ICustomItemMetaData = {
         ownerType: Model.CustomItem,
         propertyName: 'Provider',
         valueType: 'string',
-        defaultValue: 'Bing',
+        defaultValue: 'Azure',
     },{
         ownerType: Model.CustomItem,
         propertyName: 'Type',
