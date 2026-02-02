@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import { DxDashboardControlModule } from 'devexpress-dashboard-angular';
 import { DevExtremeModule } from 'devextreme-angular';
 import { DashboardControlArgs, DashboardPanelExtension } from 'devexpress-dashboard';
@@ -12,9 +13,11 @@ import { PolarChartItemExtension } from './extensions/polar-chart-item';
 import { SimpleTableItemExtension } from './extensions/simple-table-item';
 import { WebPageItemExtension } from './extensions/webpage-item';
 
+
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, DxDashboardControlModule, DevExtremeModule],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, DxDashboardControlModule, DevExtremeModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
