@@ -114,15 +114,17 @@ This dashboard contains the following custom items:
 
 **View Script**: [online-map-item.ts](dashboard-angular-app/src/app/extensions/online-map-item.ts)
 
-A custom **Online Map** item allows you to place callouts on Google or Bing maps using geographical coordinates. The [dxMap](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxMap/) is used as an underlying UI component. This custom item supports the following settings that you can configure in the Web Dashboard UI:
+A custom **Online Map** item allows you to place callouts on OpenStreetMap or Azure maps using geographical coordinates. The [dxMap](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxMap/) is used as an underlying UI component. This custom item supports the following settings that you can configure in the Web Dashboard UI:
 
 ![online-map-item](images/online-map-item.png)
 
-- **Provider** - Specifies whether to show Azure or Bing maps.
-- **Type** - Specifies the map type. You can choose between `RoadMap`, `Satellite` or `Hybrid`.
+- **Provider** - Specifies whether to show OpenStreetMap or Azure maps.
+- **Type** - Specifies the map type (Azure only). You can choose between `RoadMap`, `Satellite` or `Hybrid`.
 - **Display Mode** - Specifies whether to show markers or routes.
 
-To ensure maps render correctly, specify your Azure/Bing Maps credentials in the [online-map-item.ts](dashboard-angular-app/src/app/extensions/online-map-item.ts#L171) file.
+The OpenStreetMap provider uses the [OpenLayers](https://openlayers.org/) library (the `ol` package), which is registered in the `scripts` and `styles` sections of [angular.json](dashboard-angular-app/angular.json). No API key is required.
+
+To use Azure maps, specify your Azure Maps credentials in the [online-map-item.ts](dashboard-angular-app/src/app/extensions/online-map-item.ts#L184) file.
 
 ### Web Page
 
